@@ -1,29 +1,20 @@
-import express from "express";
-import passport from "passport";
-import GoogleStrategy from "passport-google-oauth20";
+// Express is used to expose routes for data to be served
+const express = require("express");
 
-// const keys = require("./config/keys");
-import * as keys from "./config/keys.js";
+// Mongoose is used to communicate with MongoDB
+const mongoose = require("mongoose");
+
+require("./services/passport");
 
 const app = express();
 
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: keys.googleClientID,
-      clientSecret: keys.googleClientSecret,
-      callbackURL: "/auth/google/callback",
-    },
-    (accessToken) => {
-      console.log(accessToken);
-    }
-  )
-);
+const keys = require("./config/keys");
+mongoose.connect(keys.mongoURI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
-app.get(
-  "/auth/google",
-  passport.authenticate("google", { scope: ["profile", "email"] })
-);
+require("./routes/authRoutes")(app);
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT);
