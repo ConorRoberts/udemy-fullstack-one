@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "node index.js",
-    "deploy": "git add . & git commit -m 'Update'",
+    "deploy": "git add . & git commit -m 'Update' & git push heroku main",
     "dev": "nodemon index.js"
   },
   "author": "",
