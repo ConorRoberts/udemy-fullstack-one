@@ -1,15 +1,32 @@
 // Express is used to expose routes for data to be served
 const express = require("express");
 
+const cookieSession = require("cookie-session");
+const passport = require("passport");
+
+const keys = require("./config/keys");
+
 // Mongoose is used to communicate with MongoDB
 const mongoose = require("mongoose");
 
-require("./services/passport");
 require("./models/User");
+require("./services/passport");
 
 const app = express();
 
-const keys = require("./config/keys");
+app.use(
+  cookieSession({
+    // Setting cookie lifetime
+    maxAge: 30 * 24 * 60 * 60 * 1000,
+
+    // Keys to pass into cookie
+    keys: [keys.cookieKey],
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 mongoose.connect(keys.mongoURI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
