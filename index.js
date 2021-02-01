@@ -16,6 +16,7 @@ const keys = require("./config/keys");
 const mongoose = require("mongoose");
 
 require("./models/User");
+require("./models/Survey");
 require("./services/passport");
 
 const app = express();

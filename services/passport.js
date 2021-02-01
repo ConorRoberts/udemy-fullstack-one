@@ -15,7 +15,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (id, done) => {
   const foundUser = await User.findById(id);
-  done(null,foundUser);
+  done(null, foundUser);
 });
 
 passport.use(
@@ -25,7 +25,7 @@ passport.use(
       clientID: keys.googleClientID,
       clientSecret: keys.googleClientSecret,
       callbackURL: "/auth/google/callback",
-      proxy:true
+      proxy: true,
     },
     // Creating new record in database with profile id
     async (accessToken, refreshToken, profile, done) => {
@@ -39,7 +39,10 @@ passport.use(
         done(null, existingUser);
       } else {
         // Create and store new user with profile id within our database
-        const newUser = await new User({ googleId: profile.id }).save();
+        const newUser = await new User({
+          googleId: profile.id,
+          name: profile.displayName,
+        }).save();
         done(null, newUser);
       }
     }

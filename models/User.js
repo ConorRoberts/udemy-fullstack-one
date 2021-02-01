@@ -5,6 +5,7 @@ const { Schema } = mongoose;
 // Defines properties of a user
 const userSchema = new Schema({
   googleId: String,
+  name:String,
   credits: { type: Number, default: 0 },
 });
 
