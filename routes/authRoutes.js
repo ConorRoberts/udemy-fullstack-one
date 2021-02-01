@@ -6,11 +6,18 @@ module.exports = (app) => {
     passport.authenticate("google", { scope: ["profile", "email"] })
   );
 
-  app.get("/auth/google/callback", passport.authenticate("google"));
+  app.get(
+    "/auth/google/callback",
+    passport.authenticate("google"),
+    (req, res) => {
+      res.redirect("/surveys");
+    }
+  );
 
   app.get("/api/logout", (req, res) => {
     // We want to logout
     req.logout();
+    res.redirect("/");
 
     // To confirm a logout
     res.send(req.user);
