@@ -43,6 +43,7 @@ mongoose.connect(keys.mongoURI, {
 
 require("./routes/authRoutes")(app);
 require("./routes/billingRoutes")(app);
+require("./routes/surveyRoutes")(app);
 
 if (process.env.NODE_ENV==="production"){
   // Tell express to handle unknown routes and redirect them to react

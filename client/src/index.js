@@ -11,7 +11,8 @@ import { createStore, applyMiddleware } from "redux";
 
 import reducers from "./reducers";
 
-// Fetch link https://jsonplaceholder.typicode.com/albums
+import axios from "axios";
+window.axios = axios;
 
 const store = createStore(reducers, {}, applyMiddleware(reduxThunk));
 
